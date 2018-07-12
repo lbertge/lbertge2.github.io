@@ -1,0 +1,1 @@
+I'm a software engineer at Abbvie Stemcentrx. In my spare time, I like to think about stupid ideas with intention.
