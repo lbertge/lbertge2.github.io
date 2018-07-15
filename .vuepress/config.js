@@ -1,4 +1,9 @@
 module.exports = {
+    markdown: {
+        config: md => {
+            md.use(require("markdown-it-katex"))
+        }
+    },
     locales: {
         '/': {
             lang: 'en-US',
@@ -12,7 +17,7 @@ module.exports = {
           }
     },
     head: [
-        ['link', { rel: 'icon', href: '/favicon.ico' }]
+        ['link', { rel: 'icon', href: '/favicon.ico' }],
         ['link', { rel: 'manifest', href: '/manifest.json' }],
         ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
         ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
@@ -23,6 +28,7 @@ module.exports = {
     title: "lbert's blog",
     themeConfig: {
         repo: 'lbertge/lbertge2.github.io',
+        sidebarDepth: 0,
         locales: {
             '/': {
                 label: 'English',
@@ -56,7 +62,6 @@ function genSidebarConfig(title) {
     return [
         {
             title,
-            collapsable: true,
             children: [
                 'xor-toy-problem'
             ]

@@ -1,5 +1,7 @@
 # The complexities of a toy problem
 
+[[toc]]
+
 ## Don't make neural nets for everything
 
 Let's take a look at a [toy problem](https://blog.openai.com/requests-for-research-2/).
@@ -19,4 +21,10 @@ def xor(string):
 xor([1, 0, 1]) # 0
 ```
 
-## Let's do it anyway to show why we shouldn't
+## 
+
+$$x + y = z$$
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
