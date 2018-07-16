@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "vuepress build"
+    "site:build": "vuepress build site",
+    "site:dev": "vuepress dev site"
   },
   "dependencies": {
     "markdown-it-katex": "^2.0.3",
