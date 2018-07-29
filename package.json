@@ -4,6 +4,7 @@
     "site:dev": "vuepress dev site"
   },
   "dependencies": {
+    "gsap": "^2.0.1",
     "markdown-it-katex": "^2.0.3",
     "vuepress": "^0.12.0"
   }

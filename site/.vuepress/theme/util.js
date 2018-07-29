@@ -185,6 +185,11 @@ export function resolveMatchingConfig (route, config) {
   return {}
 }
 
+export function getGitFirstUpdatedTimeStamp (filepath) {
+    console.log(filepath)
+    // return parseInt(spawn.sync('git', ['log', '-1', '--format=%ct', filepath]).stdout.toString('utf-8')) * 1000
+}
+
 function ensureEndingSlash (path) {
   return /(\.html|\/)$/.test(path)
     ? path

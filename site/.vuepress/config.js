@@ -1,3 +1,5 @@
+const spawn = require('cross-spawn')
+
 module.exports = {
     markdown: {
         config: md => {
@@ -36,7 +38,8 @@ module.exports = {
                 lastUpdated: 'Last Updated',
                 nav: [
                     { text: 'Blog', link: '/post/' },
-                    { text: 'About', link: '/about/' }
+                    { text: 'About', link: '/about/' },
+                    { text: 'Books', link: '/books/' }
                 ],
                 sidebar: {
                     '/post/': genSidebarConfig('Blog')
@@ -48,7 +51,8 @@ module.exports = {
                 lastUpdated: '上次更新',
                 nav: [
                     { text: '博客', link: '/zh/post/' },
-                    { text: '关于', link: '/zh/about/' }
+                    { text: '关于', link: '/zh/about/' },
+                    { text: '书', link: '/zh/books/' }
                 ],
                 sidebar: {
                     '/zh/post/': genSidebarConfig('博客')
@@ -63,8 +67,17 @@ function genSidebarConfig(title) {
         {
             title,
             children: [
-                'xor-toy-problem'
-            ]
+                'xor-toy-problem',
+                'blog-setup',
+                'placeholder'
+            ],
+            blah: getGitFirstUpdatedTimeStamp('README.md')
         }
     ]
+}
+
+function getGitFirstUpdatedTimeStamp (filepath) {
+    console.log(spawn.sync('pwd').stdout.toString('utf-8'))
+    console.log(parseInt(spawn.sync('git', ['log', '-1', '--format=%ct', filepath]).stdout.toString('utf-8')) * 1000)
+    return parseInt(spawn.sync('git', ['log', '-1', '--format=%ct', filepath]).stdout.toString('utf-8')) * 1000
 }

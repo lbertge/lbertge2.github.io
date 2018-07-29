@@ -1,7 +1,9 @@
 <template>
   <div class="page">
     <slot name="top"/>
-    <Content :custom="false"/>
+    <transition name="slide-fade" mode="out-in">
+      <Content :custom="false"/>
+    </transition>
     <div class="page-edit">
       <div class="edit-link" v-if="editLink">
         <a :href="editLink" target="_blank" rel="noopener noreferrer">{{ editLinkText }}</a>
@@ -12,7 +14,7 @@
         <span class="time">{{ lastUpdated }}</span>
       </div>
     </div>
-    <div class="page-nav" v-if="prev || next">
+    <!-- <div class="page-nav" v-if="prev || next">
       <p class="inner">
         <span v-if="prev" class="prev">
           ← <router-link v-if="prev" class="prev" :to="prev.path">
@@ -25,7 +27,7 @@
           </router-link> →
         </span>
       </p>
-    </div>
+    </div> -->
     <slot name="bottom"/>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default {
   props: ['sidebarItems'],
   computed: {
     lastUpdated () {
-      if (this.$page.lastUpdated) {
+      if (this.$page.lastUpdated && this.$page.isDated) {
         return new Date(this.$page.lastUpdated).toLocaleString(this.$lang)
       }
     },

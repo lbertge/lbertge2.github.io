@@ -5,18 +5,21 @@
         @touchend="onTouchEnd">
         <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar"/>
         <div class="sidebar-mask" @click="toggleSidebar(false)"></div>
-        <Sidebar :items="sidebarItems" @toggle-sidebar="toggleSidebar">
+        <Sidebar key="sidebar" v-if="shouldShowSidebar" :items="sidebarItems" @toggle-sidebar="toggleSidebar">
         <slot name="sidebar-top" slot="top"/>
         <slot name="sidebar-bottom" slot="bottom"/>
         </Sidebar>
-        <div class="custom-layout" v-if="$page.frontmatter.layout">
-        <component :is="$page.frontmatter.layout"/>
-        </div>
-        <Home v-else-if="$page.frontmatter.home"/>
-        <Page v-else :sidebar-items="sidebarItems">
-        <slot name="page-top" slot="top"/>
-        <slot name="page-bottom" slot="bottom"/>
-        </Page>
+        <transition name="slide-fade" mode="out-in" appear>
+          <div class="custom-layout" v-if="$page.frontmatter.layout">
+            <component :is="$page.frontmatter.layout"/>
+          </div>
+          <Home v-else-if="$page.frontmatter.home"/>
+          <BlogFeed v-else-if="$page.frontmatter.blogfeed" :items="sidebarItems"/>
+          <Page v-else :sidebar-items="sidebarItems">
+          <slot name="page-top" slot="top"/>
+          <slot name="page-bottom" slot="bottom"/>
+          </Page>
+        </transition>
     </div>
 </template>
 
@@ -27,13 +30,15 @@ import Home from './Home.vue'
 import Navbar from './Navbar.vue'
 import Page from './Page.vue'
 import Sidebar from './Sidebar.vue'
+import BlogFeed from './BlogFeed.vue'
 import { resolveSidebarItems } from './util'
 
 export default {
-  components: { Home, Page, Sidebar, Navbar },
+  components: { Home, Page, Sidebar, Navbar, BlogFeed },
   data () {
     return {
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      screenWidth: window.innerWidth
     }
   },
 
@@ -60,7 +65,8 @@ export default {
         !frontmatter.layout &&
         !frontmatter.home &&
         frontmatter.sidebar !== false &&
-        this.sidebarItems.length
+        this.sidebarItems.length &&
+        this.screenWidth < 719
       )
     },
     sidebarItems () {
@@ -86,6 +92,9 @@ export default {
 
   mounted () {
     window.addEventListener('scroll', this.onScroll)
+    window.addEventListener('resize', () => {
+      this.screenWidth = window.innerWidth
+    })
 
     // configure progress bar
     nprogress.configure({ showSpinner: false })
@@ -131,3 +140,16 @@ export default {
 
 <style src="prismjs/themes/prism-tomorrow.css"></style>
 <style src="./styles/theme.styl" lang="stylus"></style>
+<style>
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+</style>
