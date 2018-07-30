@@ -214,7 +214,9 @@ function resolveItem (item, pages, base, isNested) {
     return {
       type: 'group',
       title: item.title,
-      children: children.map(child => resolveItem(child, pages, base, true)),
+      children: children.map( function (child, index) {
+        return { ...resolveItem(child.post, pages, base, true), date: child.date }
+      }),
       collapsable: item.collapsable !== false
     }
   }

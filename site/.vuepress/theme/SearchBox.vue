@@ -61,7 +61,13 @@ export default {
       const res = []
       for (let i = 0; i < pages.length; i++) {
         if (res.length >= max) break
+
         const p = pages[i]
+
+        if (themeConfig.excludeSearchPath.some( path => p.path.includes(path) )) {
+          continue
+        }
+
         // filter out results that do not match current locale
         if (this.getPageLocalePath(p) !== localePath) {
           continue

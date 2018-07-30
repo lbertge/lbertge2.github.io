@@ -17,21 +17,21 @@ export default {
         return {
             tl: new TimelineLite(),
             index: 0,
-            DELAY_CONST: 0.2
+            DELAY_CONST: 0.15
         }
     },
 
     methods: {
         beforeEnter: function (el) {
             el.style.opacity = 0
-            el.style.height = 0
+            el.style.height = '1.0em'
         },
         enter: function (el, done) {
             var delay = (this.index++) * this.DELAY_CONST
             this.tl.to(
                 el, 
-                1, 
-                { opacity: 1, height: '1.6em', onComplete: done },
+                0.5, 
+                { opacity: 1, height: '2.0em', onComplete: done },
                 delay
             )
         },

@@ -1,4 +1,6 @@
 const spawn = require('cross-spawn')
+const fs = require('fs')
+const blogDir = 'site/post/'
 
 module.exports = {
     markdown: {
@@ -31,6 +33,9 @@ module.exports = {
     themeConfig: {
         repo: 'lbertge/lbertge2.github.io',
         sidebarDepth: 0,
+        excludeSearchPath: [
+            'drafts/'
+        ],
         locales: {
             '/': {
                 label: 'English',
@@ -42,7 +47,7 @@ module.exports = {
                     { text: 'Books', link: '/books/' }
                 ],
                 sidebar: {
-                    '/post/': genSidebarConfig('Blog')
+                    '/post/': genBlogPosts('Blog')
                 }
             },
             '/zh/': {
@@ -55,29 +60,35 @@ module.exports = {
                     { text: '书', link: '/zh/books/' }
                 ],
                 sidebar: {
-                    '/zh/post/': genSidebarConfig('博客')
+                    '/zh/post/': genBlogPosts('博客')
                 }
             }
         }
     }
 }
 
-function genSidebarConfig(title) {
+function genBlogPosts(title) {
     return [
         {
             title,
-            children: [
-                'xor-toy-problem',
-                'blog-setup',
-                'placeholder'
-            ],
-            blah: getGitFirstUpdatedTimeStamp('README.md')
+            children: getAllBlogPosts()
         }
     ]
 }
 
+function getAllBlogPosts () {
+    const posts = fs.readdirSync(blogDir)
+    return posts
+        .map( function (post) { 
+            return {
+                post: post.replace('.md', ''), 
+                date: getGitFirstUpdatedTimeStamp(blogDir + post)
+            }
+        })
+        .filter( post => !post.post.includes('README') )
+        .sort( (post1, post2) => post1.date < post2.date )
+}
+
 function getGitFirstUpdatedTimeStamp (filepath) {
-    console.log(spawn.sync('pwd').stdout.toString('utf-8'))
-    console.log(parseInt(spawn.sync('git', ['log', '-1', '--format=%ct', filepath]).stdout.toString('utf-8')) * 1000)
     return parseInt(spawn.sync('git', ['log', '-1', '--format=%ct', filepath]).stdout.toString('utf-8')) * 1000
 }

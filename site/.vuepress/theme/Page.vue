@@ -39,7 +39,7 @@ export default {
   props: ['sidebarItems'],
   computed: {
     lastUpdated () {
-      if (this.$page.lastUpdated && this.$page.isDated) {
+      if (this.$page.lastUpdated) {
         return new Date(this.$page.lastUpdated).toLocaleString(this.$lang)
       }
     },

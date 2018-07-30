@@ -1,6 +1,12 @@
 */node_modules/*
 *.DS_Store*
 
+# VSCode settings
+.vscode/*
+
+# Build files
+*/.vuepress/dist/*
+
 # Logs
 logs
 *.log
