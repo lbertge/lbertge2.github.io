@@ -37,8 +37,7 @@ export default {
   components: { Home, Page, Sidebar, Navbar, BlogFeed },
   data () {
     return {
-      isSidebarOpen: false,
-      screenWidth: window.innerWidth
+      isSidebarOpen: false
     }
   },
 
@@ -66,7 +65,7 @@ export default {
         !frontmatter.home &&
         frontmatter.sidebar !== false &&
         this.sidebarItems.length &&
-        this.screenWidth < 719
+        window.innerWidth < 719
       )
     },
     sidebarItems () {
@@ -92,9 +91,6 @@ export default {
 
   mounted () {
     window.addEventListener('scroll', this.onScroll)
-    window.addEventListener('resize', () => {
-      this.screenWidth = window.innerWidth
-    })
 
     // configure progress bar
     nprogress.configure({ showSpinner: false })
