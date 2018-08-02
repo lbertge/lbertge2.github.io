@@ -3,6 +3,7 @@ const fs = require('fs')
 const blogDir = 'site/post/'
 
 module.exports = {
+    ga: 'UA-123260924-1',
     markdown: {
         config: md => {
             md.use(require("markdown-it-katex"))

@@ -9,10 +9,12 @@
         <a :href="editLink" target="_blank" rel="noopener noreferrer">{{ editLinkText }}</a>
         <OutboundLink/>
       </div>
+    <transition name="slide-fade" mode="out-in">
       <div class="last-updated" v-if="lastUpdated">
         <span class="prefix">{{ lastUpdatedText }}: </span>
         <span class="time">{{ lastUpdated }}</span>
       </div>
+    </transition>
     </div>
     <!-- <div class="page-nav" v-if="prev || next">
       <p class="inner">

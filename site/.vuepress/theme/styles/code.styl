@@ -47,7 +47,7 @@ div[class*="language-"]
     top 0.8em
     right 1em
     font-size 0.75rem
-    color rgba(255, 255, 255, 0.4)
+    color rgba(255, 255, 255, 0.7)
   &:not(.line-numbers-mode)
     .line-numbers-wrapper
       display none
@@ -95,7 +95,7 @@ div[class*="language-"]
       background-color $codeBgColor
 
 
-for lang in js ts html md vue css sass scss less stylus go java c sh yaml
+for lang in $codeLang
   div{'[class~="language-' + lang + '"]'}
     &:before
       content ('' + lang)
