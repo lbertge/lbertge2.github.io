@@ -9,7 +9,7 @@
         <slot name="sidebar-top" slot="top"/>
         <slot name="sidebar-bottom" slot="bottom"/>
         </Sidebar>
-        <transition name="slide-fade" mode="out-in" appear>
+        <!-- <transition name="slide-fade" mode="out-in" appear> -->
           <div class="custom-layout" v-if="$page.frontmatter.layout">
             <component :is="$page.frontmatter.layout"/>
           </div>
@@ -19,7 +19,7 @@
           <slot name="page-top" slot="top"/>
           <slot name="page-bottom" slot="bottom"/>
           </Page>
-        </transition>
+        <!-- </transition> -->
     </div>
 </template>
 
