@@ -1,4 +1,9 @@
+---
+editLink: false
+---
+
 I'm a software engineer at Abbvie Stemcentrx. In my spare time, I like to think about stupid ideas with intention.
+If you'd like to contact me, I can be found at `<my-github-username> at gmail`.
 
 ### About this site
 

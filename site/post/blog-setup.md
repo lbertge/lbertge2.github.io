@@ -45,6 +45,20 @@ The other major pain point came from the way the site designed communication bet
   <img>
 </picture>
 
+```
+meh, not sure how to fix this yet
+graph LR
+A[post/*.md] -->|parse as YAML| B(JSON object)
+A -.->|Gulp.watch&#40&#41 | A
+subgraph data source 
+     B
+end
+B -->|extract JSON| C[display]
+subgraph frontend
+     C[display]
+end
+```
+
 This drew me to a fundamental question: to what end was I working towards? When the site didn't perform as I expected, I felt a nagging desire to figure out why; after all, this would be my own site, and I'd feel stupid if I didn't know my own project worked. On the other hand, I could just working and working on the theme, and the site would probably never get published with any actual content.
 
 _Small digression: I'm sure many would agree that at this point taking a middle-ground would be a good resolution, and achieving that has always been my greatest struggle. Everyone has a different definition of where this middle-ground is, but I don't know where my own is. I hate the idea of giving things up. Nevertheless, it seems to be the case that I have to ask myself these meta-related questions to get myself out of this overthinking rut._
@@ -58,3 +72,5 @@ Sometime later as I was browsing the Vue ecosystem I happened to stumble upon Vu
 On customization: I think working on the design of a product, whether it's cutting down existing or adding new fancy animations, is equally taxing and requires a vision for how the result should _eventually_ look. The difference is that, for an already-customized project, you are biased to its design, and that inevitably affects the satisfaction you achieve when customizing it to yourself. You will be happy with minimal changes (good), or you will be forever stuck trying to perfect a biased image (bad), or you will completely change it (in which case, you might as well start from scratch, so also bad). 
 
 I liken it to painting a picture of a cat wielding Thor's hammer; you can draw the image yourself, which allows you to control shape, pose, and the size of the hammer. Or, you could take an existing image of a cat sleeping, which constrains where to place the hammer (there is no lack of creativity here, but it's hard to change the fact that the cat has its eyes closed).
+
+I think Vuepress is not entirely an ideal case, either. I find that the development of the theme is very new, and I'm not sure how blog support will eventually look like. I do think it'll be worthwhile to figure out what happens to it, and I suspect I will want to use some of the to-be-built features. I plan to keep two different branches, `production`, which will be for modifying my own theme, `master`, which makes no deviations to the default theme and builds in userland as often as possible.

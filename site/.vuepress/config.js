@@ -1,17 +1,23 @@
 module.exports = {
     // dest: 'vuepress',
     ga: 'UA-123260924-1',
+    markdown: {
+        config: md => {
+            md.use(require("markdown-it-katex"))
+              .use(require("markdown-it-mermaid").default)
+        }
+    },
     locales: {
         '/': {
             lang: 'en-US',
             title: "lbert's blog",
             description: "Albert's blog"
         },
-        // '/zh/': {
-        //     lang: 'zh-CN',
-        //     title: "lbert's 博客",
-        //     description: 'Albert Ge 博客'
-        // }
+        '/zh/': {
+            lang: 'zh-CN',
+            title: "lbert's 博客",
+            description: 'Albert Ge 博客'
+        }
     },
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }],
@@ -82,9 +88,25 @@ function genSidebarConfig(title) {
             title,
             collapsable: false,
             children: [
-                // '',
                 'blog-setup'
             ]
         }
     ]
+}
+
+function getAllBlogPosts () {
+    const posts = fs.readdirSync(blogDir)
+    return posts
+        .map( function (post) { 
+            return {
+                post: post.replace('.md', ''), 
+                date: getGitFirstUpdatedTimeStamp(blogDir + post)
+            }
+        })
+        .filter( post => !post.post.includes('README') )
+        .sort( (post1, post2) => post1.date < post2.date )
+}
+
+function getGitFirstUpdatedTimeStamp (filepath) {
+    return parseInt(spawn.sync('git', ['log', '-1', '--format=%ct', filepath]).stdout.toString('utf-8')) * 1000
 }

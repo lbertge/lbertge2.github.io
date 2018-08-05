@@ -1,3 +1,7 @@
+---
+editLink: false
+---
+
 I've tried to keep up with consistently reading. I'm mostly accessing books via audiobooks due to the demands of my commute, but as I've discovered I'm a much better visual learner than auditory, so I'll probably have to revisit some of these in physical form.
 
 #### 2018
