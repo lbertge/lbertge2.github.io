@@ -1,5 +1,1 @@
----
-home: false
-isDated: false
-blogfeed: blog-feed
----
+Yes, this is a blog.

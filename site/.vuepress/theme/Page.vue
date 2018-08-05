@@ -1,35 +1,62 @@
 <template>
   <div class="page">
     <slot name="top"/>
-    <!-- <transition name="slide-fade" mode="out-in"> -->
-      <Content :custom="false"/>
-    <!-- </transition> -->
+
+    <Content :custom="false"/>
+
     <div class="page-edit">
-      <div class="edit-link" v-if="editLink">
-        <a :href="editLink" target="_blank" rel="noopener noreferrer">{{ editLinkText }}</a>
+      <div
+        class="edit-link"
+        v-if="editLink"
+      >
+        <a
+          :href="editLink"
+          target="_blank"
+          rel="noopener noreferrer"
+        >{{ editLinkText }}</a>
         <OutboundLink/>
       </div>
-    <!-- <transition name="slide-fade" mode="out-in"> -->
-      <div class="last-updated" v-if="lastUpdated">
+
+      <div
+        class="last-updated"
+        v-if="lastUpdated"
+      >
         <span class="prefix">{{ lastUpdatedText }}: </span>
         <span class="time">{{ lastUpdated }}</span>
       </div>
-    <!-- </transition> -->
     </div>
-    <!-- <div class="page-nav" v-if="prev || next">
+
+    <div class="page-nav" v-if="prev || next">
       <p class="inner">
-        <span v-if="prev" class="prev">
-          ← <router-link v-if="prev" class="prev" :to="prev.path">
+        <span
+          v-if="prev"
+          class="prev"
+        >
+          ←
+          <router-link
+            v-if="prev"
+            class="prev"
+            :to="prev.path"
+          >
             {{ prev.title || prev.path }}
           </router-link>
         </span>
-        <span v-if="next" class="next">
-          <router-link v-if="next" :to="next.path">
+
+        <span
+          v-if="next"
+          class="next"
+        >
+          <router-link
+            v-if="next"
+            :to="next.path"
+          >
             {{ next.title || next.path }}
-          </router-link> →
+          </router-link>
+          →
         </span>
       </p>
-    </div> -->
+    </div>
+
     <slot name="bottom"/>
   </div>
 </template>
@@ -39,12 +66,14 @@ import { resolvePage, normalize, outboundRE, endingSlashRE } from './util'
 
 export default {
   props: ['sidebarItems'],
+
   computed: {
     lastUpdated () {
       if (this.$page.lastUpdated) {
         return new Date(this.$page.lastUpdated).toLocaleString(this.$lang)
       }
     },
+
     lastUpdatedText () {
       if (typeof this.$themeLocaleConfig.lastUpdated === 'string') {
         return this.$themeLocaleConfig.lastUpdated
@@ -54,6 +83,7 @@ export default {
       }
       return 'Last Updated'
     },
+
     prev () {
       const prev = this.$page.frontmatter.prev
       if (prev === false) {
@@ -64,6 +94,7 @@ export default {
         return resolvePrev(this.$page, this.sidebarItems)
       }
     },
+
     next () {
       const next = this.$page.frontmatter.next
       if (next === false) {
@@ -74,6 +105,7 @@ export default {
         return resolveNext(this.$page, this.sidebarItems)
       }
     },
+
     editLink () {
       if (this.$page.frontmatter.editLink === false) {
         return
@@ -96,6 +128,7 @@ export default {
         return this.createEditLink(repo, docsRepo, docsDir, docsBranch, path)
       }
     },
+
     editLinkText () {
       return (
         this.$themeLocaleConfig.editLinkText ||
@@ -104,6 +137,7 @@ export default {
       )
     }
   },
+
   methods: {
     createEditLink (repo, docsRepo, docsDir, docsBranch, path) {
       const bitbucket = /bitbucket.org/

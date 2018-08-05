@@ -185,11 +185,6 @@ export function resolveMatchingConfig (route, config) {
   return {}
 }
 
-export function getGitFirstUpdatedTimeStamp (filepath) {
-    console.log(filepath)
-    // return parseInt(spawn.sync('git', ['log', '-1', '--format=%ct', filepath]).stdout.toString('utf-8')) * 1000
-}
-
 function ensureEndingSlash (path) {
   return /(\.html|\/)$/.test(path)
     ? path
@@ -214,9 +209,7 @@ function resolveItem (item, pages, base, isNested) {
     return {
       type: 'group',
       title: item.title,
-      children: children.map( function (child, index) {
-        return { ...resolveItem(child.post, pages, base, true), date: child.date }
-      }),
+      children: children.map(child => resolveItem(child, pages, base, true)),
       collapsable: item.collapsable !== false
     }
   }

@@ -1,26 +1,59 @@
 <template>
-    <div class="theme-container"
-        :class="pageClasses"
-        @touchstart="onTouchStart"
-        @touchend="onTouchEnd">
-        <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar"/>
-        <div class="sidebar-mask" @click="toggleSidebar(false)"></div>
-        <Sidebar key="sidebar" v-if="shouldShowSidebar" :items="sidebarItems" @toggle-sidebar="toggleSidebar">
-        <slot name="sidebar-top" slot="top"/>
-        <slot name="sidebar-bottom" slot="bottom"/>
-        </Sidebar>
-        <!-- <transition name="slide-fade" mode="out-in" appear> -->
-          <div class="custom-layout" v-if="$page.frontmatter.layout">
-            <component :is="$page.frontmatter.layout"/>
-          </div>
-          <Home v-else-if="$page.frontmatter.home"/>
-          <BlogFeed v-else-if="$page.frontmatter.blogfeed" :items="sidebarItems"/>
-          <Page v-else :sidebar-items="sidebarItems">
-          <slot name="page-top" slot="top"/>
-          <slot name="page-bottom" slot="bottom"/>
-          </Page>
-        <!-- </transition> -->
+  <div
+    class="theme-container"
+    :class="pageClasses"
+    @touchstart="onTouchStart"
+    @touchend="onTouchEnd"
+  >
+    <Navbar
+      v-if="shouldShowNavbar"
+      @toggle-sidebar="toggleSidebar"
+    />
+
+    <div
+      class="sidebar-mask"
+      @click="toggleSidebar(false)"
+    ></div>
+
+    <Sidebar
+      :items="sidebarItems"
+      @toggle-sidebar="toggleSidebar"
+    >
+      <slot
+        name="sidebar-top"
+        slot="top"
+      />
+      <slot
+        name="sidebar-bottom"
+        slot="bottom"
+      />
+    </Sidebar>
+
+    <div
+      class="custom-layout"
+      v-if="$page.frontmatter.layout"
+    >
+      <component :is="$page.frontmatter.layout"/>
     </div>
+
+    <Home v-else-if="$page.frontmatter.home"/>
+
+    <Page
+      v-else
+      :sidebar-items="sidebarItems"
+    >
+      <slot
+        name="page-top"
+        slot="top"
+      />
+      <slot
+        name="page-bottom"
+        slot="bottom"
+      />
+    </Page>
+
+    <SWUpdatePopup :updateEvent="swUpdateEvent"/>
+  </div>
 </template>
 
 <script>
@@ -30,15 +63,16 @@ import Home from './Home.vue'
 import Navbar from './Navbar.vue'
 import Page from './Page.vue'
 import Sidebar from './Sidebar.vue'
-import BlogFeed from './BlogFeed.vue'
+import SWUpdatePopup from './SWUpdatePopup.vue'
 import { resolveSidebarItems } from './util'
 
 export default {
-  components: { Home, Page, Sidebar, Navbar, BlogFeed },
+  components: { Home, Page, Sidebar, Navbar, SWUpdatePopup },
+
   data () {
     return {
       isSidebarOpen: false,
-      screenWidth: null
+      swUpdateEvent: null
     }
   },
 
@@ -59,16 +93,17 @@ export default {
         this.$themeLocaleConfig.nav
       )
     },
+
     shouldShowSidebar () {
       const { frontmatter } = this.$page
       return (
         !frontmatter.layout &&
         !frontmatter.home &&
         frontmatter.sidebar !== false &&
-        this.sidebarItems.length &&
-        this.screenWidth < 719
+        this.sidebarItems.length
       )
     },
+
     sidebarItems () {
       return resolveSidebarItems(
         this.$page,
@@ -77,6 +112,7 @@ export default {
         this.$localePath
       )
     },
+
     pageClasses () {
       const userPageClass = this.$page.frontmatter.pageClass
       return [
@@ -92,10 +128,6 @@ export default {
 
   mounted () {
     window.addEventListener('scroll', this.onScroll)
-    this.screenWidth = window.innerWidth
-    window.addEventListener('resize', () => {
-      this.screenWidth = window.innerWidth
-    })
 
     // configure progress bar
     nprogress.configure({ showSpinner: false })
@@ -111,12 +143,15 @@ export default {
       nprogress.done()
       this.isSidebarOpen = false
     })
+
+    this.$on('sw-updated', this.onSWUpdated)
   },
 
   methods: {
     toggleSidebar (to) {
       this.isSidebarOpen = typeof to === 'boolean' ? to : !this.isSidebarOpen
     },
+
     // side swipe
     onTouchStart (e) {
       this.touchStart = {
@@ -124,6 +159,7 @@ export default {
         y: e.changedTouches[0].clientY
       }
     },
+
     onTouchEnd (e) {
       const dx = e.changedTouches[0].clientX - this.touchStart.x
       const dy = e.changedTouches[0].clientY - this.touchStart.y
@@ -134,6 +170,10 @@ export default {
           this.toggleSidebar(false)
         }
       }
+    },
+
+    onSWUpdated (e) {
+      this.swUpdateEvent = e
     }
   }
 }
@@ -141,16 +181,3 @@ export default {
 
 <style src="prismjs/themes/prism-tomorrow.css"></style>
 <style src="./styles/theme.styl" lang="stylus"></style>
-<style>
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(-10px);
-  opacity: 0;
-}
-</style>

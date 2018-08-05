@@ -1,17 +1,25 @@
+const spawn = require('cross-spawn')
+const fs = require('fs')
+const blogDir = 'site/post/'
+
 module.exports = {
-    // dest: 'vuepress',
     ga: 'UA-123260924-1',
+    markdown: {
+        config: md => {
+            md.use(require("markdown-it-katex"))
+        }
+    },
     locales: {
         '/': {
             lang: 'en-US',
             title: "lbert's blog",
             description: "Albert's blog"
-        },
-        // '/zh/': {
-        //     lang: 'zh-CN',
-        //     title: "lbert's 博客",
-        //     description: 'Albert Ge 博客'
-        // }
+          },
+          '/zh/': {
+            lang: 'zh-CN',
+            title: "lbert's 博客",
+            description: 'Albert Ge 博客'
+          }
     },
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }],
@@ -23,68 +31,65 @@ module.exports = {
         ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
     ],
     title: "lbert's blog",
-    serviceWorker: true,
     themeConfig: {
         repo: 'lbertge/lbertge2.github.io',
-        editLinks: true,
+        sidebarDepth: 0,
         excludeSearchPath: [
             'drafts/'
         ],
-        docsDir: 'site',
         locales: {
             '/': {
                 label: 'English',
                 selectText: 'Languages',
-                editLinkText: 'Edit this page on GitHub',
                 lastUpdated: 'Last Updated',
-                serviceWorker: {
-                    updatePopup: {
-                        message: "New content is available.",
-                        buttonText: "Refresh"
-                    }
-                },
                 nav: [
                     { text: 'Blog', link: '/post/' },
                     { text: 'About', link: '/about/' },
                     { text: 'Books', link: '/books/' }
                 ],
                 sidebar: {
-                    '/post/': genSidebarConfig('Blog')
+                    '/post/': genBlogPosts('Blog')
                 }
             },
             '/zh/': {
-                label: '简体中文',
+                label: '简单中文',
                 selectText: '选择语言',
-                editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
-                serviceWorker: {
-                    updatePopup: {
-                        message: "发现新内容可用",
-                        buttonText: "刷新"
-                    }
-                },
                 nav: [
                     { text: '博客', link: '/zh/post/' },
                     { text: '关于', link: '/zh/about/' },
                     { text: '书', link: '/zh/books/' }
                 ],
                 sidebar: {
-                    '/zh/post/': genSidebarConfig('博客')
+                    '/zh/post/': genBlogPosts('博客')
                 }
             }
         }
     }
 }
 
-function genSidebarConfig(title) {
+function genBlogPosts(title) {
     return [
         {
             title,
-            collapsable: false,
-            children: [
-                // '',
-                'blog-setup'
-            ]
+            children: getAllBlogPosts()
         }
     ]
+}
+
+function getAllBlogPosts () {
+    const posts = fs.readdirSync(blogDir)
+    return posts
+        .map( function (post) { 
+            return {
+                post: post.replace('.md', ''), 
+                date: getGitFirstUpdatedTimeStamp(blogDir + post)
+            }
+        })
+        .filter( post => !post.post.includes('README') )
+        .sort( (post1, post2) => post1.date < post2.date )
+}
+
+function getGitFirstUpdatedTimeStamp (filepath) {
+    return parseInt(spawn.sync('git', ['log', '-1', '--format=%ct', filepath]).stdout.toString('utf-8')) * 1000
 }

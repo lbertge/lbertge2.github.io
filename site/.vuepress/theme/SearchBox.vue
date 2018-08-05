@@ -10,15 +10,21 @@
       @blur="focused = false"
       @keyup.enter="go(focusIndex)"
       @keyup.up="onUp"
-      @keyup.down="onDown">
-    <ul class="suggestions"
+      @keyup.down="onDown"
+    >
+    <ul
+      class="suggestions"
       v-if="showSuggestions"
       :class="{ 'align-right': alignRight }"
-      @mouseleave="unfocus">
-      <li class="suggestion" v-for="(s, i) in suggestions"
+      @mouseleave="unfocus"
+    >
+      <li
+        class="suggestion"
+        v-for="(s, i) in suggestions"
         :class="{ focused: i === focusIndex }"
         @mousedown="go(i)"
-        @mouseenter="focus(i)">
+        @mouseenter="focus(i)"
+      >
         <a :href="s.path" @click.prevent>
           <span class="page-title">{{ s.title || s.path }}</span>
           <span v-if="s.header" class="header">&gt; {{ s.header.title }}</span>
@@ -37,6 +43,7 @@ export default {
       focusIndex: 0
     }
   },
+
   computed: {
     showSuggestions () {
       return (
@@ -45,6 +52,7 @@ export default {
         this.suggestions.length
       )
     },
+
     suggestions () {
       const query = this.query.trim().toLowerCase()
       if (!query) {
@@ -61,13 +69,7 @@ export default {
       const res = []
       for (let i = 0; i < pages.length; i++) {
         if (res.length >= max) break
-
         const p = pages[i]
-
-        if (themeConfig.excludeSearchPath.some( path => p.path.includes(path) )) {
-          continue
-        }
-
         // filter out results that do not match current locale
         if (this.getPageLocalePath(p) !== localePath) {
           continue
@@ -89,6 +91,7 @@ export default {
       }
       return res
     },
+
     // make suggestions align right when there are not enough items
     alignRight () {
       const navCount = (this.$site.themeConfig.nav || []).length
@@ -96,6 +99,7 @@ export default {
       return navCount + repo <= 2
     }
   },
+
   methods: {
     getPageLocalePath (page) {
       for (const localePath in this.$site.locales || {}) {
@@ -105,6 +109,7 @@ export default {
       }
       return '/'
     },
+
     onUp () {
       if (this.showSuggestions) {
         if (this.focusIndex > 0) {
@@ -114,6 +119,7 @@ export default {
         }
       }
     },
+
     onDown () {
       if (this.showSuggestions) {
         if (this.focusIndex < this.suggestions.length - 1) {
@@ -123,6 +129,7 @@ export default {
         }
       }
     },
+
     go (i) {
       if (!this.showSuggestions) {
         return
@@ -131,9 +138,11 @@ export default {
       this.query = ''
       this.focusIndex = 0
     },
+
     focus (i) {
       this.focusIndex = i
     },
+
     unfocus () {
       this.focusIndex = -1
     }
