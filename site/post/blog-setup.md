@@ -35,29 +35,19 @@ For this project, my primary challenge was how to make small tweaks without brea
 
 The other major pain point came from the way the site designed communication between the front and back ends. As Snipcart writes in their post, an intentional feature was to adapt data to the application, rather than the converse. For the demo, the data came in the form of raw HTML strings in a static file. I said okay, let's try to not reinvent the wheel and build on top of this stack. But in order for me to replicate any modicum of markdown editing that I had with Hugo, I had to build a `gulp` pipeline which would watch for any changes in markdown files, parse it, and then send it off the frontend for display. So instead, it felt like building a data-processing layer on top of the already existing one, which seemed extraneous. Even then, it still didn't feel seamless; there was no watcher on the data source to hot-reload the page, meaning I'd still have to manually refresh the browser page each time I changed the post.
 
-<picture>
-  <source srcset="/blog-setup/diagram-2.svg" media="(min-width: 719px)">
-  <img>
-</picture>
 
-<picture>
-  <source srcset="/blog-setup/diagram-mobile.svg" media="(max-width: 719px)">
-  <img>
-</picture>
-
-```
-meh, not sure how to fix this yet
+<mermaid>
 graph LR
-A[post/*.md] -->|parse as YAML| B(JSON object)
-A -.->|Gulp.watch&#40&#41 | A
-subgraph data source 
-     B
-end
-B -->|extract JSON| C[display]
-subgraph frontend
-     C[display]
-end
-```
+  A[post/*.md] -->|parse as YAML| B(JSON object)
+  A -.->|Gulp watch| A
+  subgraph data source
+    B
+  end
+  B -->|extract JSON| C[display]
+  subgraph frontend
+    C[display]
+  end
+</mermaid>
 
 This drew me to a fundamental question: to what end was I working towards? When the site didn't perform as I expected, I felt a nagging desire to figure out why; after all, this would be my own site, and I'd feel stupid if I didn't know my own project worked. On the other hand, I could just working and working on the theme, and the site would probably never get published with any actual content.
 

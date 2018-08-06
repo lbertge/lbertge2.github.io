@@ -10,12 +10,12 @@ module.exports = {
     locales: {
         '/': {
             lang: 'en-US',
-            title: "lbert's blog",
+            title: "lbert ge",
             description: "Albert's blog"
         },
         '/zh/': {
             lang: 'zh-CN',
-            title: "lbert's 博客",
+            title: "lbert ge",
             description: 'Albert Ge 博客'
         }
     },
