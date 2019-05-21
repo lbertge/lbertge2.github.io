@@ -7,6 +7,6 @@
     "gsap": "^2.0.1",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-mermaid": "^0.2.5",
-    "vuepress": "^0.13.0"
+    "vuepress": "^1.0.0-alpha.48"
   }
 }
