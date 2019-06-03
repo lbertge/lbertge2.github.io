@@ -1,8 +1,27 @@
+const { path } = require('@vuepress/shared-utils')
+
 module.exports = {
-    // dest: 'vuepress',
     ga: 'UA-123260924-1',
+    plugins: [
+      ['@vuepress/plugin-blog', {
+        permalink: '/:year/:slug'
+      }],
+      '@vuepress/google-analytics',
+      ['@vuepress/pwa', {
+        serviceWorker: true,
+        popupComponent: 'MySWUpdatePopup',
+        updatePopup: true
+      }],
+      ['@vuepress/register-components', {
+        componentsDir: [
+          path.resolve('site/.vuepress/components/beautiful-vue')
+        ]
+      }],
+      'vuepress-plugin-reading-time'
+
+    ],
     markdown: {
-        config: md => {
+        extendMarkdown: md => {
             md.use(require("markdown-it-katex"))
               .use(require("markdown-it-mermaid").default)
         }
@@ -10,12 +29,12 @@ module.exports = {
     locales: {
         '/': {
             lang: 'en-US',
-            title: "lbert ge",
+            title: "albert ge",
             description: "Albert's blog"
         },
         '/zh/': {
             lang: 'zh-CN',
-            title: "lbert ge",
+            title: "albert ge",
             description: 'Albert Ge 博客'
         }
     },
@@ -28,11 +47,12 @@ module.exports = {
         ['meta', { name: 'msapplication-TileImage', content: '/icons/mstile-150x150.png' }],
         ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
     ],
-    title: "lbert's blog",
+    title: "albert's blog",
     serviceWorker: true,
     themeConfig: {
         repo: 'lbertge/lbertge2.github.io',
         editLinks: true,
+        lastUpdated: 'Last Updated',
         excludeSearchPath: [
             'drafts/'
         ],
@@ -50,7 +70,7 @@ module.exports = {
                     }
                 },
                 nav: [
-                    { text: 'Blog', link: '/post/' },
+                    { text: 'Blog', link: '/' },
                     { text: 'About', link: '/about/' },
                     { text: 'Books', link: '/books/' }
                 ],

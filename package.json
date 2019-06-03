@@ -1,12 +1,16 @@
 {
   "scripts": {
-    "site:build": "vuepress build site",
-    "site:dev": "vuepress dev site"
+    "site:dev": "vuepress dev site",
+    "site:build": "vuepress build site"
   },
-  "dependencies": {
-    "gsap": "^2.0.1",
+  "devDependencies": {
+    "@vuepress/plugin-blog": "^1.0.0-alpha.48",
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.48",
+    "@vuepress/plugin-pwa": "^1.0.0-alpha.48",
+    "@vuepress/plugin-register-components": "^1.0.0-alpha.48",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-mermaid": "^0.2.5",
-    "vuepress": "^1.0.0-alpha.48"
+    "vuepress": "^1.0.0-alpha.48",
+    "vuepress-plugin-reading-time": "^0.1.1"
   }
 }
