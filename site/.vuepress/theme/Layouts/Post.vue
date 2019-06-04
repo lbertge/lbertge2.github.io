@@ -1,12 +1,12 @@
 <template>
   <div class="post">
-    <!--Copied from <Content slot-key="header"/>-->
-    <div class="content header"> 
-      <h1>
-        {{ this.$page.title }}
-        <TagBadges style="padding-left: 0.25rem;"/>
-      </h1>
-    </div>
+    Copied from <Content slot-key="header"/>
+    <!--<div class="content header"> -->
+      <!--<h1>-->
+        <!--{{ this.$page.title }}-->
+        <!--<TagBadges style="padding-left: 0.25rem;"/>-->
+      <!--</h1>-->
+    <!--</div>-->
     <div class="meta wrapper">
       <Date/> · <ReadingTime />
     </div>

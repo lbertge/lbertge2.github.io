@@ -6,6 +6,10 @@ layout: Post
 tags: [vue, meta]
 ---
 
+::: slot header
+# {{ this.$page.title }}
+:::
+
 This website way took too long and was unequivocally frustrating to set-up. But as with any experience, I think the process has taught me a lot about what I expect of myself when writing down my thoughts and how to present them. 
 
 I've gone through several iterations of blogging-capable frameworks, and ultimately I have decided to build off Vuepress. My reasons are as follows:
