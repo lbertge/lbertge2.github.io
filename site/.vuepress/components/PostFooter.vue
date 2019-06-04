@@ -1,13 +1,22 @@
 <template>
   <div class="post-footer">
     <div class="post-footer-item">
-      <TagBadges style="padding-left: 0.25rem;"/>
     </div>
-    <!--<div class="post-footer-item">-->
-      <!--<EditLink style="text-align: right;"/>-->
-    <!--</div>-->
+    <div class="post-footer-item">
+      <EditLink style="text-align: right;"/>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    lastUpdated() {
+      return this.$page.lastUpdated
+    }
+  }
+}
+<script/>
 
 <style lang="stylus" scoped>
 .post-footer {

@@ -11,9 +11,9 @@
       <Date/> · <ReadingTime />
     </div>
     <ParentLayout />
-    <!--<div class="wrapper">-->
-      <!--<PostFooter />-->
-    <!--</div>-->
+    <div class="wrapper">
+      <PostFooter />
+    </div>
   </div>
 </template>
 

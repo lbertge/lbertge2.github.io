@@ -1,3 +1,7 @@
+.page-edit {
+  display: none;
+}
+
 .wrapper {
   max-width: var(--content-width, 640px);
   padding: 0 1.5rem 0;
