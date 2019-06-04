@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    Copied from <Content slot-key="header"/>
+    <Content slot-key="header"/>
     <!--<div class="content header"> -->
       <!--<h1>-->
         <!--{{ this.$page.title }}-->
