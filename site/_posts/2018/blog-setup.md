@@ -1,14 +1,9 @@
 ---
 title: Blog setup
-description: I open sourced vue-autosuggest, and wrote about it.
-date: "August 05, 2018"
+date: August 05, 2018
 layout: Post
 tags: [vue, meta]
 ---
-
-::: slot header
-# {{ this.$page.title }}
-:::
 
 This website way took too long and was unequivocally frustrating to set-up. But as with any experience, I think the process has taught me a lot about what I expect of myself when writing down my thoughts and how to present them. 
 

@@ -1,6 +1,10 @@
 <template>
   <div class="post-footer">
     <div class="post-footer-item">
+      <span class="date">
+        <b class="prefix">Last Updated: </b>
+        {{ lastUpdated }}
+      </span>
     </div>
     <div class="post-footer-item">
       <EditLink style="text-align: right;"/>
@@ -12,13 +16,17 @@
 export default {
   computed: {
     lastUpdated() {
-      return this.$page.lastUpdated
+      return this.$page.lastUpdated;
     }
   }
 }
-<script/>
+</script>
 
 <style lang="stylus" scoped>
+.prefix {
+  color: #4e6e8e;
+}
+
 .post-footer {
   display: flex; 
   justify-content: space-between;

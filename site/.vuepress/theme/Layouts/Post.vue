@@ -1,12 +1,12 @@
 <template>
   <div class="post">
-    <Content slot-key="header"/>
-    <!--<div class="content header"> -->
-      <!--<h1>-->
-        <!--{{ this.$page.title }}-->
-        <!--<TagBadges style="padding-left: 0.25rem;"/>-->
-      <!--</h1>-->
-    <!--</div>-->
+    <!--<Content slot-key="header"/>-->
+    <div class="content header"> 
+      <h1>
+        {{ this.$page.title }}
+        <TagBadges style="padding-left: 0.25rem;"/>
+      </h1>
+    </div>
     <div class="meta wrapper">
       <Date/> · <ReadingTime />
     </div>
@@ -22,12 +22,6 @@ import ParentLayout from '@parent-theme/layouts/Layout.vue'
 
 export default {
   components: { ParentLayout },
-
-  computed: {
-    lastUpdated() {
-      return this.$page.lastUpdated
-    }
-  }
 }
 </script>
 
